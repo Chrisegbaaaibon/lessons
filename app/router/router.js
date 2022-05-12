@@ -1,7 +1,7 @@
-const routes = require('express').Router();
-const signup = require('../controllers/signup');
+const router = require('express').Router();
+const signup = require('../controller/signup');
 
 
-routes.post('/signup', signup.createStudent);
+router.post('/signup', signup.createStudent);
 
-module.exports = routes;
+module.exports = router;

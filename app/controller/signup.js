@@ -6,7 +6,8 @@ require('dotenv').config();
 
 exports.createStudent = async(req, res) => {
     try {
-        let {name, email, phonenumber, username, address, password, confirmPassword } = req.body;
+        let { name, email, phonenumber, username, address, password } = req.body;
+        console.log(req.body)
         let oldStudent = await Student.findOne({email: email});
         let oldName = await Student.findOne({username: username });
         if (!req.body){
@@ -14,13 +15,14 @@ exports.createStudent = async(req, res) => {
                 message: 'Please fill in all the fields'
             })
         }
+
         if (oldStudent){
-            return res.status(400).json({
+             res.status(400).json({
                 message: "This email is already registered. Please use another email"
             });
         }
         if (oldName){
-            return res.status(400).json({
+             res.status(400).json({
                 message: "This username is already registered. Please use another username"
             })
         }
@@ -47,7 +49,13 @@ exports.createStudent = async(req, res) => {
               <a href=${url}>Verify</a>`
         })
 
+        res.header('x-auth-token', token)
+
+        return res.json({
+            message: 'OTP will be sent to your email id please kindly check it',
+          })
+
     } catch (error) {
-        
+        console.log(error)
     }
 }
